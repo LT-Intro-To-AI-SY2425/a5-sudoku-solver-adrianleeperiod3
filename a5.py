@@ -106,7 +106,19 @@ class Board:
         Returns:
             a tuple of row, column index identifying the most constrained cell
         """
-        pass
+        minimumLength = 9
+        row = 0
+        col = 0
+        for i in range(self.size):
+            for j in range(self.size):
+                currCell = self.rows[i][j]
+                if isinstance(currCell, list) and len(currCell) < minimumLength:
+                    minimumLength = len(currCell)
+                    row = i
+                    col = j
+                    print(i, j, minimumLength)
+        return(row,col)
+        
 
     def failure_test(self) -> bool:
         """Check if we've failed to correctly fill out the puzzle. If we find a cell
@@ -335,8 +347,7 @@ if __name__ == "__main__":
 
     # test_dfs_or_bfs(False, second_moves)
     b = Board()
-    b.print_pretty()
-    b.update(0,2,2)
-    b.print_pretty()
+    b.update(1,3,3)
+    b.find_most_constrained_cell()
     
     pass
