@@ -112,11 +112,11 @@ class Board:
         for i in range(self.size):
             for j in range(self.size):
                 currCell = self.rows[i][j]
+                print(currCell)
                 if isinstance(currCell, list) and len(currCell) < minimumLength:
                     minimumLength = len(currCell)
                     row = i
                     col = j
-                    print(i, j, minimumLength)
         return(row,col)
         
 
@@ -128,7 +128,15 @@ class Board:
         Returns:
             True if we have failed to fill out the puzzle, False otherwise
         """
-        pass
+        minimumLength = 9
+        row = 0
+        col = 0
+        for i in range(self.size):
+            for j in range(self.size):
+                currCell = self.rows[i][j]
+                if isinstance(currCell, list) and len(currCell) == 0:
+                    return True
+        return False
 
     def goal_test(self) -> bool:
         """Check if we've completed the puzzle (if we've placed all the numbers).
@@ -137,7 +145,15 @@ class Board:
         Returns:
             True if we've placed all numbers, False otherwise
         """
-        pass
+        minimumLength = 9
+        row = 0
+        col = 0
+        for i in range(self.size):
+            for j in range(self.size):
+                currCell = self.rows[i][j]
+                if isinstance(currCell, list):
+                    return False
+        return True
 
     def update(self, row: int, column: int, assignment: int) -> None:
         """Assigns the given value to the cell given by passed in row and column
@@ -347,7 +363,16 @@ if __name__ == "__main__":
 
     # test_dfs_or_bfs(False, second_moves)
     b = Board()
-    b.update(1,3,3)
-    b.find_most_constrained_cell()
+    b.update(1,0,1)
+    b.update(1,1,2)
+    b.update(1,2,3)
+    b.update(1,3,4)
+    b.update(2,4,6)
+    b.update(1,5,5)
+    b.update(1,6,7)
+    b.update(1,7,8)
+    b.update(1,8,9)
+    b.print_pretty()
+    b.failure_test()
     
     pass
