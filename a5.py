@@ -112,7 +112,6 @@ class Board:
         for i in range(self.size):
             for j in range(self.size):
                 currCell = self.rows[i][j]
-                print(currCell)
                 if isinstance(currCell, list) and len(currCell) < minimumLength:
                     minimumLength = len(currCell)
                     row = i
@@ -165,8 +164,6 @@ class Board:
             remove_if_exists(self.rows[row][i], assignment) #removes assignment from the ith row
             remove_if_exists(self.rows[i][column], assignment) #removes assignment from the ith column
 
-        print(self.subgrid_coordinates(row,column))
-
         for i,j in self.subgrid_coordinates(row,column):
             remove_if_exists(self.rows[i][j], assignment)
         
@@ -196,14 +193,6 @@ def DFS(state: Board) -> Board:
             cpy = copy.deepcopy(b)
             cpy.update(r,c,selec)
             s.push(cpy)
-    
-    
-    # b = s.pop()
-    # mcc = b.find_most_constrained_cell()
-    # b.update(mcc[0],mcc[1], b.rows[mcc[0]][mcc[1]][0])
-    # s.push(b)
-    # b = s.pop
-
 
 def BFS(state: Board) -> Board:
     """Performs a breadth first search. Takes a Board and attempts to assign values to
@@ -217,7 +206,18 @@ def BFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
-    pass
+    q = Queue([state])
+    while q.is_empty() == False:
+        b: Board = q.pop()
+        if b.goal_test():
+            return b
+        mcc = b.find_most_constrained_cell()
+        r = mcc[0]
+        c = mcc[1]
+        for selec in b.rows[r][c]:
+            cpy = copy.deepcopy(b)
+            cpy.update(r,c,selec)
+            q.push(cpy)
 
 
 if __name__ == "__main__":
@@ -366,12 +366,12 @@ if __name__ == "__main__":
 
     test_dfs_or_bfs(True, second_moves)
 
-    # print("<<<<<<<<<<<<<< Testing BFS on First Game >>>>>>>>>>>>>>")
+    print("<<<<<<<<<<<<<< Testing BFS on First Game >>>>>>>>>>>>>>")
 
-    # test_dfs_or_bfs(False, first_moves)
+    test_dfs_or_bfs(False, first_moves)
 
-    # print("<<<<<<<<<<<<<< Testing BFS on Second Game >>>>>>>>>>>>>>")
+    print("<<<<<<<<<<<<<< Testing BFS on Second Game >>>>>>>>>>>>>>")
 
-    # test_dfs_or_bfs(False, second_moves)
+    test_dfs_or_bfs(False, second_moves)
     
     pass
