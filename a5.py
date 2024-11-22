@@ -182,9 +182,12 @@ def DFS(state: Board) -> Board:
         either None in the case of invalid input or a solved board
     """
     s = Stack([state])
+    popCount = 0
     while s.is_empty() == False:
         b: Board = s.pop()
+        popCount += 1
         if b.goal_test():
+            print(f"Number of Iterations: {popCount}")
             return b
         mcc = b.find_most_constrained_cell()
         r = mcc[0]
@@ -193,6 +196,7 @@ def DFS(state: Board) -> Board:
             cpy = copy.deepcopy(b)
             cpy.update(r,c,selec)
             s.push(cpy)
+    print(popCount)
 
 def BFS(state: Board) -> Board:
     """Performs a breadth first search. Takes a Board and attempts to assign values to
@@ -207,9 +211,12 @@ def BFS(state: Board) -> Board:
         either None in the case of invalid input or a solved board
     """
     q = Queue([state])
+    popCount = 0
     while q.is_empty() == False:
         b: Board = q.pop()
+        popCount += 1
         if b.goal_test():
+            print(f"Number of Iterations: {popCount}")
             return b
         mcc = b.find_most_constrained_cell()
         r = mcc[0]
@@ -218,7 +225,7 @@ def BFS(state: Board) -> Board:
             cpy = copy.deepcopy(b)
             cpy.update(r,c,selec)
             q.push(cpy)
-
+    
 
 if __name__ == "__main__":
     # uncomment the below lines once you've implemented the board class
